@@ -1,0 +1,6 @@
+<vector android:height="40dp" android:viewportHeight="1000"
+    android:viewportWidth="1000" android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#ffbf00"
+        android:name="Rounded Rectangle 1 copy" android:pathData="m389.7 95.1c-10.1 0 -18.3 8.2 -18.3 18.3v258h-258c-10.1 0 -18.3 8.2 -18.3 18.3v221.4c0 10.1 8.2 18.3 18.3 18.3h258v258c0 10.1 8.2 18.3 18.3 18.3h221.4c10.1 0 18.3 -8.2 18.3 -18.3v-258h258c10.1 0 18.3 -8.2 18.3 -18.3v-221.4c0 -10.1 -8.2 -18.3 -18.3 -18.3h-258v-258c0 -10.1 -8.2 -18.3 -18.3 -18.3z"/>
+    <path android:fillColor="#ffbf00" android:name="Ellipse 1" android:pathData="m389.7 95.1c-10.1 0 -18.3 8.2 -18.3 18.3v258h-258c-10.1 0 -18.3 8.2 -18.3 18.3v221.4c0 10.1 8.2 18.3 18.3 18.3h258v258c0 10.1 8.2 18.3 18.3 18.3h221.4c10.1 0 18.3 -8.2 18.3 -18.3v-258h258c10.1 0 18.3 -8.2 18.3 -18.3v-221.4c0 -10.1 -8.2 -18.3 -18.3 -18.3h-258v-258c0 -10.1 -8.2 -18.3 -18.3 -18.3z"/>
+</vector>
