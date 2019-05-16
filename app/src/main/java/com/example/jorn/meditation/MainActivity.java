@@ -22,9 +22,12 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.jorn.meditation.activity.LoginActivity;
 import com.example.jorn.meditation.com.example.jorn.meditation.helper.HelperMethods;
 import com.example.jorn.meditation.com.example.jorn.meditation.helper.CountDownThread;
 import com.example.jorn.meditation.com.example.jorn.meditation.helper.DatabaseHelper;
+import com.example.jorn.meditation.com.example.jorn.meditation.helper.SQLiteHandler;
+import com.example.jorn.meditation.com.example.jorn.meditation.helper.SessionManager;
 import com.example.jorn.meditation.com.example.jorn.meditation.helper.TimerThread;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,8 +54,11 @@ public class MainActivity extends AppCompatActivity {
     TimerThread setTime;
     CountDownThread countDownThread;
 
+    private SQLiteHandler dbApi;
+    private SessionManager session;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -61,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         // initialize media, helper elements and UI elements
         initialiseComponents();
+
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
 
         // Setup the toolbar as the action bar and setup the progressBar:
         setupActionBar(toolbar);
@@ -106,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     statsScreen(MainActivity.super.getCurrentFocus());
                 else if (item.getItemId() == R.id.settings)
                     settingsScreen(MainActivity.super.getCurrentFocus());
+                else if (item.getItemId() == R.id.logout)
+                    logoutUser();
                 return false;
             }
         });
@@ -122,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
     private void initialiseComponents() {
         toolbar = findViewById(R.id.toolbar);
         db = new DatabaseHelper(getApplicationContext());
+        dbApi = new SQLiteHandler(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
         cb = findViewById(R.id.checkbox); cb.setChecked(true);
         start = findViewById(R.id.startBtn);
         addMeditation = findViewById(R.id.addMeditation);
@@ -256,5 +270,19 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addMeditationClicked(View view) {
         startActivity(new Intent(this, AddMeditation.class));
+    }
+
+    /**
+     * Logs out the current user.
+     */
+    private void logoutUser() {
+        session.setLogin(false);
+
+        dbApi.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
