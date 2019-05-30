@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     CountDownThread countDownThread;
 
     private SQLiteHandler dbApi;
-    private SessionManager session;
+//    private SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
         // initialize media, helper elements and UI elements
         initialiseComponents();
 
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
+//        if (!session.isLoggedIn()) {
+//            logoutUser();
+//        }
 
         // Setup the toolbar as the action bar and setup the progressBar:
         setupActionBar(toolbar);
@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     statsScreen(MainActivity.super.getCurrentFocus());
                 else if (item.getItemId() == R.id.settings)
                     settingsScreen(MainActivity.super.getCurrentFocus());
-                else if (item.getItemId() == R.id.logout)
-                    logoutUser();
+//                else if (item.getItemId() == R.id.logout)
+//                    logoutUser();
                 return false;
             }
         });
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         db = new DatabaseHelper(getApplicationContext());
         dbApi = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
+//        session = new SessionManager(getApplicationContext());
         cb = findViewById(R.id.checkbox); cb.setChecked(true);
         start = findViewById(R.id.startBtn);
         addMeditation = findViewById(R.id.addMeditation);
@@ -272,17 +272,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, AddMeditation.class));
     }
 
-    /**
-     * Logs out the current user.
-     */
-    private void logoutUser() {
-        session.setLogin(false);
-
-        dbApi.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    /**
+//     * Logs out the current user.
+//     */
+//    private void logoutUser() {
+//        session.setLogin(false);
+//
+//        dbApi.deleteUsers();
+//
+//        // Launching the login activity
+//        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }

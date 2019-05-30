@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.jorn.meditation.MainActivity;
 
+@Deprecated
 public class AppController extends MainActivity {
     public static final String TAG = AppController.class.getSimpleName();
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+@Deprecated
 public class SessionManager {
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
