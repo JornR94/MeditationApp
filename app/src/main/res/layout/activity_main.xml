@@ -56,11 +56,11 @@
                     />
 
                 <CheckBox
-                    android:id="@+id/checkbox"
+                    android:id="@+id/cbMedType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/smoothYellow"
-                    android:text="@string/meditate_in_silence"
+                    android:text="Focus, open awareness and difficult emotions"
                     />
 
                 <LinearLayout

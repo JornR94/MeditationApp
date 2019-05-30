@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     long startTime = 0;
 
     // UI elements
-    CheckBox cb;
+    CheckBox medType;
     Button start;
     ImageButton addMeditation;
     EditText timeToMed;
@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
         // initialize media, helper elements and UI elements
         initialiseComponents();
 
-//        if (!session.isLoggedIn()) {
-//            logoutUser();
-//        }
-
         // Setup the toolbar as the action bar and setup the progressBar:
         setupActionBar(toolbar);
         setupProgressBar();
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cb.isChecked()) {
+                if (!medType.isChecked()) {
                     // If we have a countdown going
                     if (runningCountDown) {
                         stopCountDown();
@@ -136,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseHelper(getApplicationContext());
         dbApi = new SQLiteHandler(getApplicationContext());
 //        session = new SessionManager(getApplicationContext());
-        cb = findViewById(R.id.checkbox); cb.setChecked(true);
+        medType = findViewById(R.id.cbMedType); medType.setChecked(true);
         start = findViewById(R.id.startBtn);
         addMeditation = findViewById(R.id.addMeditation);
         timeToMed = findViewById(R.id.meditationTime);
@@ -193,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         runningNormal = true;
         startTime = System.currentTimeMillis();
         // Start a timer thread
-        setTime = new TimerThread(timeMeditating, startTime);
+        setTime = new TimerThread(timeMeditating, startTime, this);
         setTime.start();
     }
 
