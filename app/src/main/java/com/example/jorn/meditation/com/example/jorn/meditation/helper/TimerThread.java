@@ -16,6 +16,7 @@ public class TimerThread extends Thread {
     private long sessionTime;
     private TextView timeMeditating;
     private boolean threadRunning = false;
+    private boolean focusOpenAwarenessEmotions;
     private MediaPlayer focusSound;
     private MediaPlayer openAwarenessSound;
     private MediaPlayer emotionsSound;
@@ -30,12 +31,13 @@ public class TimerThread extends Thread {
      * @param tv
      * @param st
      */
-    public TimerThread(TextView tv, long st, Context mainActivity) {
+    public TimerThread(TextView tv, long st, Context mainActivity, boolean focusOpenAwarenessEmotions) {
         super();
         timeMeditating = tv;
         startTime = st;
         this.sessionTime = 5000;
         this.mainActivity = mainActivity;
+        this.focusOpenAwarenessEmotions = focusOpenAwarenessEmotions;
 
         focusSound = MediaPlayer.create(mainActivity, R.raw.gong_sound);
         openAwarenessSound = MediaPlayer.create(mainActivity, R.raw.gong_sound);
@@ -58,8 +60,10 @@ public class TimerThread extends Thread {
             while (threadRunning) {
                 sleep(1000);
                 long currentTime = System.currentTimeMillis() - startTime;
-                if (currentTime % sessionTime < 100)
-                    playSound();
+                if (focusOpenAwarenessEmotions) {
+                    if (currentTime % sessionTime < 1500)
+                        playSound();
+                }
 
                 String time = HelperMethods.toTime(currentTime);
                 Log.d("Time", Long.toString(startTime) + " " + Long.toString(currentTime));

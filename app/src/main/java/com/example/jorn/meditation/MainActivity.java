@@ -76,31 +76,10 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!medType.isChecked()) {
-                    // If we have a countdown going
-                    if (runningCountDown) {
-                        stopCountDown();
-                    }
-                    // If a meditation without countdown is going
-                    else if (runningNormal) {
-                        stopTimer();
-                    }
-                    // Else no meditation started yet
-                    else {
-                        // If a set meditation time is given
-                        Log.d("Time to med string", timeToMed.getText().toString());
-                        if (!timeToMed.getText().toString().equals("") && !timeToMed.getText().toString().equals("Time to meditate")) {
-                            startCountDownThread();
-                        }
-                        // Else we start a normal thread
-                        else {
-                            startTimerThread();
-                        }
-                    }
-                }
-                else {
-                    // TODO implement this bit
-                }
+                if (medType.isChecked())
+                    checkForChanges(true);
+                else
+                    checkForChanges(false);
             }
         });
 
@@ -127,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initialises all UI elements.
+     */
     private void initialiseComponents() {
         toolbar = findViewById(R.id.toolbar);
         db = new DatabaseHelper(getApplicationContext());
@@ -142,7 +124,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Override the onCreateOptionsMenu method to create the menu inflater
+     * Checks for changes after the start/stop button has been pressed.
+     * @param focusOpenAwarenessEmotions
+     */
+    private void checkForChanges(boolean focusOpenAwarenessEmotions) {
+        // If we have a countdown going
+        if (runningCountDown) {
+            stopCountDown();
+        }
+        // If a meditation without countdown is going
+        else if (runningNormal) {
+            stopTimer();
+        }
+        // Else no meditation started yet
+        else {
+            // If a set meditation time is given
+            Log.d("Time to med string", timeToMed.getText().toString());
+            if (!timeToMed.getText().toString().equals("") && !timeToMed.getText().toString().equals("Time to meditate"))
+                startCountDownThread(focusOpenAwarenessEmotions);
+            else
+                startTimerThread(focusOpenAwarenessEmotions);
+        }
+    }
+
+    /**
+     * Override the onCreateOptionsMenu method to create the menu inflater.
      * @param menu
      * @return
      */
@@ -178,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Start the normal thread
      */
-    private void startTimerThread() {
+    private void startTimerThread(boolean focusOpenAwarenessEmotions) {
         // Play the gong sound
         gongSound.start();
 
@@ -189,14 +195,14 @@ public class MainActivity extends AppCompatActivity {
         runningNormal = true;
         startTime = System.currentTimeMillis();
         // Start a timer thread
-        setTime = new TimerThread(timeMeditating, startTime, this);
+        setTime = new TimerThread(timeMeditating, startTime, this, focusOpenAwarenessEmotions);
         setTime.start();
     }
 
     /**
      * Start the countdown
      */
-    private void startCountDownThread() {
+    private void startCountDownThread(boolean focusOpenAwarenessEmotions) {
         // First check for valid input:
         int timeInMins = 0;
         try {
